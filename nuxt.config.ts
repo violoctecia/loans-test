@@ -32,14 +32,14 @@ export default defineNuxtConfig({
             }
         },
     },
-    experimental: {
-        defaults: {
-            nuxtLink: {
-                trailingSlash: "append",
-                prefetchOn: {visibility: false, interaction: true}
-            },
-        }
-    },
+    // experimental: {
+    //     defaults: {
+    //         nuxtLink: {
+    //             trailingSlash: "append",
+    //             prefetchOn: {visibility: false, interaction: true}
+    //         },
+    //     }
+    // },
 
     // devServer: {
     //     port: 3001
