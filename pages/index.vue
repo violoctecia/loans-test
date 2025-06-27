@@ -59,8 +59,19 @@ const loans = [
 ];
 
 useHead({
-    title: 'Préstamos de prepago en línea en 5 minutos'
+    title: 'Préstamos de prepago en línea en 5 minutos',
+    meta: [
+        {
+            name: 'description',
+            content: 'Seleccione 3 entidades de crédito y cumplimente el formulario de solicitud de dinero garantizado'
+        },
+        {
+            name: 'robots',
+            content: 'noindex, nofollow' /
+        }
+    ]
 })
+
 </script>
 
 <template>
