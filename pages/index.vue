@@ -67,7 +67,7 @@ useHead({
         },
         {
             name: 'robots',
-            content: 'noindex, nofollow'
+            content: 'index, follow'
         }
     ]
 })
