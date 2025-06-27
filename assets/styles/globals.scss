@@ -1,0 +1,22 @@
+
+body {
+  margin: 0;
+  background: #f4fcfe;
+  min-height: 100vh;
+  font-family: "Unbounded", sans-serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+}
+
+button, a {
+  cursor: pointer;
+}
+
+.container {
+  padding: 0 20px;
+  @media (min-width: 1040px) {
+    padding: 0;
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+}
