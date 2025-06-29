@@ -69,9 +69,45 @@ useHead({
             name: 'robots',
             content: 'index, follow'
         }
+    ],
+    script: [
+        {
+            innerHTML: `
+        !function(f,b,e,v,n,t,s)
+        {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+        n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+        if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+        n.queue=[];t=b.createElement(e);t.async=!0;
+        t.src=v;s=b.getElementsByTagName(e)[0];
+        s.parentNode.insertBefore(t,s)}(window, document,'script',
+        'https://connect.facebook.net/en_US/fbevents.js');
+        fbq('init', '1052845573476485');
+        fbq('track', 'PageView');
+      `,
+            type: 'text/javascript'
+        }
     ]
 })
 
+
+function trackLead() {
+    // @ts-ignore
+    if (typeof window.fbq === 'function') {
+        // @ts-ignore
+        window.fbq('track', 'Lead')
+    }
+}
+
+const route = useRoute()
+const queryParams = route.query
+const queryString = new URLSearchParams(queryParams as Record<string, string>).toString()
+
+const loansWithParams = computed(() =>
+    loans.map(loan => ({
+        ...loan,
+        link: queryString ? `${loan.link}?${queryString}` : loan.link
+    }))
+)
 </script>
 
 <template>
@@ -90,9 +126,12 @@ useHead({
     </section>
     <section class="offers">
         <div class="container">
-            <div class="offer" v-for="i in loans">
-                <div class="main">
-                    <nuxt-link :to="i.link" target="_blank" class="logo">
+            <div class="offer" v-for="i in loansWithParams">
+            <div class="main">
+                    <nuxt-link :to="i.link"
+                               target="_blank"
+                               class="logo"
+                               @click.native="trackLead">
                         <img :src="i.logo" loading="lazy" :alt="i.name">
                     </nuxt-link>
                     <p class="desc">{{ i.desc }}</p>
@@ -107,7 +146,10 @@ useHead({
                         <dd>{{ i.loanTerm }}</dd>
                     </div>
                 </dl>
-                <nuxt-link class="link" :to="i.link" target="_blank">Zdobądź pieniądze</nuxt-link>
+                <nuxt-link class="link"
+                           :to="i.link"
+                           target="_blank"
+                           @click.native="trackLead">Zdobądź pieniądze</nuxt-link>
             </div>
         </div>
     </section>
@@ -150,7 +192,7 @@ footer {
 
 .offers {
     background-image: linear-gradient(rgba(245, 245, 245, 1) 0%, rgba(245, 245, 245, 1) 100%);
-    padding: 40px 0;
+    padding: 20px 0;
 
     .container {
         display: flex;
