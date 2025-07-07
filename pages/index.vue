@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import SiteForm from '~/components/SiteForm.vue';
+
 const loans = [
     {
         name: 'Alvos',
@@ -58,36 +60,36 @@ const loans = [
     },
 ];
 
-useHead({
-    title: 'Préstamos de prepago en línea en 5 minutos',
-    meta: [
-        {
-            name: 'description',
-            content: 'Seleccione 3 entidades de crédito y cumplimente el formulario de solicitud de dinero garantizado'
-        },
-        {
-            name: 'robots',
-            content: 'index, follow'
-        }
-    ],
-    script: [
-        {
-            innerHTML: `
-        !function(f,b,e,v,n,t,s)
-        {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-        n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-        if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-        n.queue=[];t=b.createElement(e);t.async=!0;
-        t.src=v;s=b.getElementsByTagName(e)[0];
-        s.parentNode.insertBefore(t,s)}(window, document,'script',
-        'https://connect.facebook.net/en_US/fbevents.js');
-        fbq('init', '1052845573476485');
-        fbq('track', 'PageView');
-      `,
-            type: 'text/javascript'
-        }
-    ]
-})
+// useHead({
+//     title: 'Préstamos de prepago en línea en 5 minutos',
+//     meta: [
+//         {
+//             name: 'description',
+//             content: 'Seleccione 3 entidades de crédito y cumplimente el formulario de solicitud de dinero garantizado'
+//         },
+//         {
+//             name: 'robots',
+//             content: 'index, follow'
+//         }
+//     ],
+//     script: [
+//         {
+//             innerHTML: `
+//         !function(f,b,e,v,n,t,s)
+//         {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+//         n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+//         if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+//         n.queue=[];t=b.createElement(e);t.async=!0;
+//         t.src=v;s=b.getElementsByTagName(e)[0];
+//         s.parentNode.insertBefore(t,s)}(window, document,'script',
+//         'https://connect.facebook.net/en_US/fbevents.js');
+//         fbq('init', '1052845573476485');
+//         fbq('track', 'PageView');
+//       `,
+//             type: 'text/javascript'
+//         }
+//     ]
+// })
 
 
 function trackLead() {
@@ -153,6 +155,7 @@ const loansWithParams = computed(() =>
             </div>
         </div>
     </section>
+    <SiteForm/>
     <footer>
         <div class="container">
             <nuxt-link to="/consentimiento-datos/">Consentimiento para el tratamiento de datos personales</nuxt-link>
@@ -305,6 +308,8 @@ footer {
 
 
     .wave {
+        pointer-events: none;
+        user-select: none;
         position: absolute;
         bottom: 0;
         left: 50%;
@@ -325,9 +330,12 @@ footer {
         }
 
         .img {
+            pointer-events: none;
+            user-select: none;
             width: 100%;
             display: flex;
             justify-content: center;
+
 
             @include pre-desktop {
                 width: fit-content;
@@ -338,6 +346,7 @@ footer {
             img {
                 width: 100%;
                 max-width: 380px;
+
                 @include pre-desktop {
                     width: unset;
                     max-width: 430px;
