@@ -105,9 +105,9 @@ const submit = async () => {
         if (userData.firstName && userData.paternalSurname && userData.maternalSurname && userData.email) {
             errorMessage.value = '';
             try {
-                const res = await $fetch('http://185.180.198.89/api/ntf', {
+                await $fetch('/api/ntf', {
                     method: 'POST',
-                    body: userData,
+                    body: userData
                 });
 
                 successMessage.value = '¡Hemos recibido tu solicitud! Nuestro asesor se pondrá en contacto contigo pronto.';
