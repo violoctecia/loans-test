@@ -60,60 +60,70 @@ const loans = [
     },
 ];
 
-// useHead({
-//     title: 'Préstamos de prepago en línea en 5 minutos',
-//     meta: [
-//         {
-//             name: 'description',
-//             content: 'Seleccione 3 entidades de crédito y cumplimente el formulario de solicitud de dinero garantizado'
-//         },
-//         {
-//             name: 'robots',
-//             content: 'index, follow'
-//         }
-//     ],
-//     script: [
-//         {
-//             innerHTML: `
-//         !function(f,b,e,v,n,t,s)
-//         {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-//         n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-//         if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-//         n.queue=[];t=b.createElement(e);t.async=!0;
-//         t.src=v;s=b.getElementsByTagName(e)[0];
-//         s.parentNode.insertBefore(t,s)}(window, document,'script',
-//         'https://connect.facebook.net/en_US/fbevents.js');
-//         fbq('init', '1052845573476485');
-//         fbq('track', 'PageView');
-//       `,
-//             type: 'text/javascript'
-//         }
-//     ]
-// })
+useHead({
+    title: 'Préstamos de prepago en línea en 5 minutos',
+    meta: [
+        {
+            name: 'description',
+            content: 'Seleccione 3 entidades de crédito y cumplimente el formulario de solicitud de dinero garantizado'
+        },
+        {
+            name: 'robots',
+            content: 'index, follow'
+        }
+    ],
+    script: [
+        {
+            innerHTML: `
+        !function(f,b,e,v,n,t,s)
+        {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+        n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+        if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+        n.queue=[];t=b.createElement(e);t.async=!0;
+        t.src=v;s=b.getElementsByTagName(e)[0];
+        s.parentNode.insertBefore(t,s)}(window, document,'script',
+        'https://connect.facebook.net/en_US/fbevents.js');
+        fbq('init', '1052845573476485');
+        fbq('track', 'PageView');
+      `,
+            type: 'text/javascript'
+        }
+    ]
+})
 
 
 function trackLead() {
     // @ts-ignore
     if (typeof window.fbq === 'function') {
         // @ts-ignore
-        window.fbq('track', 'Lead')
+        window.fbq('track', 'Lead');
     }
 }
 
-const route = useRoute()
-const queryParams = route.query
-const queryString = new URLSearchParams(queryParams as Record<string, string>).toString()
+const route = useRoute();
+const queryParams = route.query;
+const queryString = new URLSearchParams(queryParams as Record<string, string>).toString();
 
 const loansWithParams = computed(() =>
     loans.map(loan => ({
         ...loan,
-        link: queryString ? `${loan.link}?${queryString}` : loan.link
-    }))
-)
+        link: queryString ? `${loan.link}?${queryString}` : loan.link,
+    })),
+);
+
+const linkActive = ref('')
+const handleClick = (link: string) => {
+    const formElement = document.getElementById('form');
+    if (formElement) {
+        formElement.scrollIntoView({ behavior: 'smooth' });
+    }
+    linkActive.value = link;
+};
+
 </script>
 
 <template>
-   <SiteHeader/>
+    <SiteHeader />
     <section class="hero">
         <div class="container">
             <div class="text">
@@ -129,7 +139,7 @@ const loansWithParams = computed(() =>
     <section class="offers">
         <div class="container">
             <div class="offer" v-for="i in loansWithParams">
-            <div class="main">
+                <div class="main">
                     <nuxt-link :to="i.link"
                                target="_blank"
                                class="logo"
@@ -148,14 +158,11 @@ const loansWithParams = computed(() =>
                         <dd>{{ i.loanTerm }}</dd>
                     </div>
                 </dl>
-                <nuxt-link class="link"
-                           :to="i.link"
-                           target="_blank"
-                           @click.native="trackLead">Zdobądź pieniądze</nuxt-link>
+                <button class="link" @click="handleClick(i.link)">Zdobądź pieniądze</button>
             </div>
         </div>
     </section>
-    <SiteForm/>
+    <SiteForm :link="linkActive"/>
     <footer>
         <div class="container">
             <nuxt-link to="/consentimiento-datos/">Consentimiento para el tratamiento de datos personales</nuxt-link>
@@ -276,7 +283,7 @@ footer {
                 }
             }
 
-            a.link {
+            button.link {
                 color: rgba(34, 34, 34, 1);
                 font-weight: 400;
                 font-size: 16px;

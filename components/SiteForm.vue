@@ -90,6 +90,10 @@ const stage = ref(1);
 const errorMessage = ref('');
 const successMessage = ref('')
 
+const props = defineProps<{
+    link: string
+}>()
+
 const submit = async () => {
     successMessage.value = ''
     errorMessage.value = ''
@@ -107,10 +111,15 @@ const submit = async () => {
             try {
                 await $fetch('/api/ntf', {
                     method: 'POST',
-                    body: userData
+                    body: {link: props.link, ...userData}
                 });
 
                 successMessage.value = '¡Hemos recibido tu solicitud! Nuestro asesor se pondrá en contacto contigo pronto.';
+                // @ts-ignore
+                if (typeof window.fbq === 'function') {
+                    // @ts-ignore
+                    window.fbq('track', 'Lead');
+                }
             } catch (e) {
                 errorMessage.value = 'Parece que ocurrió un error. Por favor, intenta de nuevo más tarde.';
             }
@@ -123,10 +132,9 @@ const submit = async () => {
 </script>
 
 <template>
-    <section>
+    <section id="form">
         <div class="container">
             <h2>Completa tu solicitud de crédito en 2 pasos</h2>
-
 
             <form @submit.prevent="submit">
                 <template v-if="!successMessage">
@@ -215,10 +223,11 @@ form {
         font-weight: 400;
         font-size: 16px;
         width: 100%;
-        background-color: rgb(255, 214, 0);
+        background-color: white;
         padding: 11px 30px;
         text-align: center;
         margin-top: auto;
+
 
         &:hover {
             background-color: black;
@@ -252,7 +261,8 @@ form {
             }
 
             &::placeholder {
-                color: #000;
+
+                color: #6C6B6BFF;
             }
         }
 
@@ -266,7 +276,7 @@ form {
 }
 
 section {
-    background-image: linear-gradient(rgba(245, 245, 245, 1) 0%, rgba(245, 245, 245, 1) 100%);
+    background-image: linear-gradient(rgba(245, 245, 245, 1) 0%, rgb(255, 214, 0) 100%);
     padding: 60px 0;
 
 }
