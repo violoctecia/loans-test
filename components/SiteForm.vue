@@ -78,6 +78,7 @@ const period = [
 
 const userData = reactive({
     loanReason: '',
+    mobilePhone: '',
     amount: '',
     selectedPeriod: '',
     firstName: '',
@@ -99,7 +100,7 @@ const submit = async () => {
     errorMessage.value = ''
 
     if (stage.value === 1) {
-        if (userData.selectedPeriod && userData.loanReason && userData.amount) {
+        if (userData.selectedPeriod && userData.loanReason && userData.amount  && userData.mobilePhone) {
             stage.value += 1;
             errorMessage.value = '';
         } else {
@@ -128,6 +129,7 @@ const submit = async () => {
         }
     }
 };
+
 
 </script>
 
@@ -161,6 +163,17 @@ const submit = async () => {
                                 <option disabled value="">Seleccione una opción</option>
                                 <option v-for="item in period" :key="item" :value="item">{{ item }}</option>
                             </select>
+                        </div>
+
+                        <div class="input">
+                            <label for="mobilePhone">Teléfono móvil</label>
+                            <input
+                                id="mobilePhone"
+                                v-model="userData.mobilePhone"
+                                v-mask="'##-####-####'"
+                                placeholder="55-5428-7540"
+                                required
+                            />
                         </div>
                     </div>
 
@@ -248,7 +261,7 @@ form {
         flex-direction: column;
         gap: 4px;
 
-        select, input {
+        select, input, :deep(input) {
             appearance: none;
             padding: 10px 14px;
             border-radius: 6px;

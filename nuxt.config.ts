@@ -32,7 +32,7 @@ export default defineNuxtConfig({
             }
         },
     },
-
+    plugins: ['~/plugins/mask.ts']
 
     // experimental: {
     //     defaults: {
