@@ -98,9 +98,9 @@ const props = defineProps<{
 const submit = async () => {
     successMessage.value = ''
     errorMessage.value = ''
-
     if (stage.value === 1) {
-        if (userData.selectedPeriod && userData.loanReason && userData.amount  && userData.mobilePhone) {
+        if (userData.selectedPeriod && userData.loanReason && userData.amount  &&  userData.mobilePhone &&
+            userData.mobilePhone.length === 12) {
             stage.value += 1;
             errorMessage.value = '';
         } else {
@@ -134,6 +134,9 @@ const submit = async () => {
 </script>
 
 <template>
+    <pre>
+        {{userData}}
+    </pre>
     <section id="form">
         <div class="container">
             <h2>Completa tu solicitud de crédito en 2 pasos</h2>
