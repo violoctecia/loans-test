@@ -134,9 +134,6 @@ const submit = async () => {
 </script>
 
 <template>
-    <pre>
-        {{userData}}
-    </pre>
     <section id="form">
         <div class="container">
             <h2>Completa tu solicitud de crédito en 2 pasos</h2>
